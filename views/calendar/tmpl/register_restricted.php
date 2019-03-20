@@ -88,8 +88,24 @@ $month = date("m", strtotime($this->event->get('publish_up')));
 	<div class="clear"></div>
 </div>
 
-<form action="index.php" id="hubForm">
-	<p class="warning">
-		<?php echo Lang::txt('Registration is closed for this event.'); ?>
+<form action="<?php echo Route::url('index.php?option='.$this->option.'&cn='.$this->group->get('cn').'&active=calendar&action=register&event_id='.$this->event->get('id')); ?>" id="hubForm" method="post">
+	<fieldset>
+		<legend><?php echo Lang::txt('Limited Registration'); ?></legend>
+		<p class="info">
+			<?php echo Lang::txt('Registration is password protected. Please supply the password you were given with your invite to join the event.'); ?>
+		</p>
+		<label>
+			<?php echo Lang::txt('Password:'); ?> <span class="required">Required</span>
+			<input type="password" name="passwrd" />
+		</label>
+	</fieldset>
+	<input type="hidden" name="option" value="com_groups" />
+	<input type="hidden" name="cn" value="<?php echo $this->group->get('cn'); ?>" />
+	<input type="hidden" name="active" value="calendar" />
+	<input type="hidden" name="action" value="register" />
+	<input type="hidden" name="event_id" value="<?php echo $this->event->get('id'); ?>" />
+
+	<p class="submit">
+		<input type="submit" name="event_submit" value="Submit" />
 	</p>
 </form>
